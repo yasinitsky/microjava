@@ -2,7 +2,7 @@ Various parts of Microjava could be licensed under different terms.
 
 Unless otherwise specified, all files are licensed under GNU GPLv3 (SPDX-License-Identifier: GPL-3.0-only).
 
-All third party software is licensed under its original licenses.
+All third party software and files generated from third party sources is licensed under its original licenses.
 
 GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
