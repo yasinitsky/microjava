@@ -9,3 +9,6 @@ function(board_mcu_map_find destination board)
 endfunction()
 
 board_mcu_map_insert(pico rp2040)
+
+# special pseudo-board for unit testing
+board_mcu_map_insert(unix unix)
