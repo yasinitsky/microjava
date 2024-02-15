@@ -11,4 +11,4 @@ endfunction()
 board_mcu_map_insert(pico rp2040)
 
 # special pseudo-board for unit testing
-board_mcu_map_insert(unix unix)
+board_mcu_map_insert(mock mock)

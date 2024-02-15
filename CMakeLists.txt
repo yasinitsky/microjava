@@ -3,8 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 # select MCU by board name
 include(cmake/board_mcu_map.cmake)
 
-option(MICROJAVA_BUILD_UNITTESTS "Build unit tests for microjava" OFF)
-
 if(NOT DEFINED MICROJAVA_BOARD)
     message(FATAL_ERROR "MICROJAVA_BOARD is not specified.")
 endif()
@@ -16,7 +14,7 @@ if(MICROJAVA_MCU STREQUAL "")
 endif()
 
 # load MCU-specific options (toolchain, linker script etc)
-include(hardware/mcu/${MICROJAVA_MCU}/mcu_options.cmake)
+include(mal/${MICROJAVA_MCU}/mcu_options.cmake)
 
 project(microjava LANGUAGES ASM C CXX)
 
@@ -25,22 +23,21 @@ string(TOUPPER MJ_MCU_${MICROJAVA_MCU} MICROJAVA_MCU_DEFINE)
 
 add_compile_definitions(${MICROJAVA_MCU_DEFINE} ${MICROJAVA_BOARD_DEFINE})
 
-add_subdirectory(hardware/mcu/${MICROJAVA_MCU})
-
-add_executable(microjava cmake/null.c)
-
-if(DEFINED MICROJAVA_COMPILER_CPU)
-    target_compile_options(microjava PRIVATE -nostdlib -mcpu=${MICROJAVA_COMPILER_CPU} ${MICROJAVA_COMPILER_OPTIONS} -Wall)
-endif()
+add_compile_options(-mtune=${MICROJAVA_COMPILER_CPU} ${MICROJAVA_COMPILER_OPTIONS} -Wall)
 
 if(DEFINED MICROJAVA_LINKER_SCRIPT)
     set_target_properties(microjava PROPERTIES LINK_DEPENDS ${MICROJAVA_LINKER_SCRIPT})
     target_link_options(microjava PRIVATE -nostdlib -T ${MICROJAVA_LINKER_SCRIPT})
 endif()
 
-if(MICROJAVA_BOARD STREQUAL "unix")
+add_executable(microjava cmake/null.c)
+
+add_subdirectory(mal/interface)
+add_subdirectory(mal/${MICROJAVA_MCU})
+
+target_link_libraries(microjava mcu)
+
+if(MICROJAVA_BOARD STREQUAL "mock")
     add_subdirectory(test)
-    target_link_libraries(microjava microjava_test mcu)
-else()
-    target_link_libraries(microjava mcu)
+    target_link_libraries(microjava microjava_test)
 endif()
