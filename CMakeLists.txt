@@ -27,9 +27,7 @@ add_compile_options(-mtune=${MICROJAVA_COMPILER_CPU} ${MICROJAVA_COMPILER_OPTION
 
 add_executable(microjava cmake/null.c)
 
-add_subdirectory(mal/interface)
-add_subdirectory(mal/${MICROJAVA_MCU})
-
+add_subdirectory(mal)
 add_subdirectory(shared)
 
 if(DEFINED MICROJAVA_LINKER_SCRIPT)
@@ -37,7 +35,7 @@ if(DEFINED MICROJAVA_LINKER_SCRIPT)
     target_link_options(microjava PRIVATE -nostdlib -T ${MICROJAVA_LINKER_SCRIPT})
 endif()
 
-target_link_libraries(microjava mcu)
+target_link_libraries(microjava microjava_mal)
 
 if(MICROJAVA_BOARD STREQUAL "mock")
     add_subdirectory(test)
