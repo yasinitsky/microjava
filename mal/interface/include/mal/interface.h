@@ -17,7 +17,7 @@
  */
 
 /**
- * @file    mcu.h
+ * @file    interface.h
  * @brief   This file contains definitions of MCU Abstraction Layer (MAL) functions
  */
 
@@ -29,11 +29,11 @@ extern "C" {
 #endif // __cplusplus
 
 /**
- * @brief MAL Interface return codes
+ * @brief MAL return codes
  */
 typedef enum {
-    MCU_OK      = 0
-} mcu_status_t;
+    MJ_MAL_OK      = 0
+} mj_mal_status_t;
 
 #ifdef __cplusplus
 } // extern "C"
