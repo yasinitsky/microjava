@@ -17,11 +17,11 @@
 
 #include "pll.h"
 
+#include <assert.h>
+
 #include "xosc/xosc.h"
 #include "resets/resets.h"
 #include "memory/memory.h"
-
-#include <assert.h>
 
 #define PLL_SYS_BASE    0x40028000u
 #define PLL_USB_BASE    0x4002c000u
@@ -70,13 +70,13 @@
 #define PLL_USB_POSTDIV2    5u
 
 typedef struct {
-    uint32_t cs;
-    uint32_t pwr;
-    uint32_t fbdiv_int;
-    uint32_t prim;
+    mj_u32 cs;
+    mj_u32 pwr;
+    mj_u32 fbdiv_int;
+    mj_u32 prim;
 } pll_hw_t;
 
-static uint32_t pll_frequencies[PLL_COUNT] = { 0 };
+static mj_u32 pll_frequencies[PLL_COUNT] = { 0 };
 
 static pll_hw_t *select_pll(pll_t pll) {
     return (pll_hw_t *)((pll == PLL_SYS) ? PLL_SYS_BASE : PLL_USB_BASE);
@@ -87,19 +87,19 @@ void pll_init() {
     pll_configure(PLL_USB, PLL_USB_VCO_FREQ, PLL_USB_POSTDIV1, PLL_USB_POSTDIV2);
 }
 
-void pll_configure(pll_t pll, uint32_t vco_frequency, uint32_t postdiv1, uint32_t postdiv2) {
+void pll_configure(pll_t pll, mj_u32 vco_frequency, mj_u32 postdiv1, mj_u32 postdiv2) {
     assert(vco_frequency >= PLL_VCO_MIN_FREQ && vco_frequency <= PLL_VCO_MAX_FREQ);
     assert((postdiv1 >= 1 && postdiv1 <= 7) && (postdiv2 >= 1 && postdiv2 <= 7));
     assert((vco_frequency / 16) >= XOSC_FREQ);
 
     pll_hw_t *pll_hw = select_pll(pll);
 
-    uint32_t fbdiv = vco_frequency / XOSC_FREQ;
+    mj_u32 fbdiv = vco_frequency / XOSC_FREQ;
     assert(fbdiv >= 16 && fbdiv <= 320);
 
-    uint32_t postdiv = (postdiv1 << PLL_PRIM_POSTDIV1_LSB) | (postdiv2 << PLL_PRIM_POSTDIV2_LSB);
+    mj_u32 postdiv = (postdiv1 << PLL_PRIM_POSTDIV1_LSB) | (postdiv2 << PLL_PRIM_POSTDIV2_LSB);
 
-    uint32_t reset = (pll == PLL_SYS) ? RESETS_RESET_PLL_SYS : RESETS_RESET_PLL_USB;
+    mj_u32 reset = (pll == PLL_SYS) ? RESETS_RESET_PLL_SYS : RESETS_RESET_PLL_USB;
     resets_reset(reset);
     resets_unreset(reset);
 
@@ -120,6 +120,6 @@ void pll_configure(pll_t pll, uint32_t vco_frequency, uint32_t postdiv1, uint32_
     pll_frequencies[pll] = vco_frequency / (postdiv1 * postdiv2);
 }
 
-uint32_t pll_get_frequency(pll_t pll) {
+mj_u32 pll_get_frequency(pll_t pll) {
     return pll_frequencies[pll];
 }

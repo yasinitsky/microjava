@@ -17,9 +17,9 @@
 
 #include "int_divider.h"
 
-#include "memory/memory.h"
+#include <shared/types.h>
 
-#include <stdint.h>
+#include "memory/memory.h"
 
 /* NOTE: There is no symbol DIV_BASE in the datasheet. This name used to clearly separate SIO functions without using SIO_BASE. */
 #define DIV_BASE        0xd0000060u
@@ -89,10 +89,10 @@ void __aeabi_uldivmod(unsigned long long n, unsigned long long d) {
         }
     }
 
-    uint32_t quot_upper = result.quot >> 32;
-    uint32_t quot_lower = result.quot;
-    uint32_t rem_upper = result.rem >> 32;
-    uint32_t rem_lower = result.rem;
+    mj_u32 quot_upper = result.quot >> 32;
+    mj_u32 quot_lower = result.quot;
+    mj_u32 rem_upper = result.rem >> 32;
+    mj_u32 rem_lower = result.rem;
 
     /* Store result in registers as described in ARM32 Runtime ABI. It works only with little-endian byte order */
     __asm__ volatile (

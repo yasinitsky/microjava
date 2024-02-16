@@ -23,7 +23,7 @@
 #ifndef MJ_HW_RP2040_PLL_H
 #define MJ_HW_RP2040_PLL_H
 
-#include <stdint.h>
+#include <shared/types.h>
 
 typedef enum {
     PLL_SYS,
@@ -46,11 +46,11 @@ void pll_init();
  * @param postdiv1      First VCO frequency post-divider in range [1, 7]
  * @param postdiv2      Second VCO frequency post-divider in range [1, 7]
  */
-void pll_configure(pll_t pll, uint32_t vco_frequency, uint32_t postdiv1, uint32_t postdiv2);
+void pll_configure(pll_t pll, mj_u32 vco_frequency, mj_u32 postdiv1, mj_u32 postdiv2);
 
 /**
  * @brief Get PLL frequency
  */
-uint32_t pll_get_frequency(pll_t pll);
+mj_u32 pll_get_frequency(pll_t pll);
 
 #endif // MJ_HW_RP2040_PLL_H

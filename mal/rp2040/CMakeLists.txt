@@ -19,5 +19,8 @@ add_library(mcu OBJECT  crt0.S
                         pll/pll.c
                         xosc/xosc.c
                         stdlib/assert.c)
+
 target_include_directories(mcu PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 target_compile_options(mcu PRIVATE -mcpu=${MICROJAVA_COMPILER_CPU})
+
+target_link_libraries(mcu microjava_shared)

@@ -25,11 +25,11 @@
 typedef struct {
     void        *flash_end;
     void        *ram_text_begin;
-    uint32_t    ram_text_size;
+    mj_u32    ram_text_size;
     void        *ram_data_begin;
-    uint32_t    ram_data_size;
+    mj_u32    ram_data_size;
     void        *ram_bss_begin;
-    uint32_t    ram_bss_size;
+    mj_u32    ram_bss_size;
 } memory_info_t;
 
 void memory_init(void) {
@@ -37,8 +37,8 @@ void memory_init(void) {
     extern volatile memory_info_t __memory_info;
 
     // don't save this functions to bootrom_funcs structure now, because it will be filled with zeros during bss initialization
-    uint32_t *(*memset4)(uint32_t *, uint8_t, uint32_t) = bootrom_func_lookup(bootrom_table_code('M', 'S'));
-    uint32_t *(*memcpy44)(uint32_t *, uint32_t *, uint32_t) = bootrom_func_lookup(bootrom_table_code('C', '4'));
+    mj_u32 *(*memset4)(mj_u32 *, mj_u8, mj_u32) = bootrom_func_lookup(bootrom_table_code('M', 'S'));
+    mj_u32 *(*memcpy44)(mj_u32 *, mj_u32 *, mj_u32) = bootrom_func_lookup(bootrom_table_code('C', '4'));
 
     // fill .ram.bss with zeros
     memset4(__memory_info.ram_bss_begin, 0, __memory_info.ram_bss_size);
@@ -53,10 +53,10 @@ void memory_init(void) {
     bootrom_funcs.memcpy44 = memcpy44;
 }
 
-uint32_t *memory_set4(uint32_t *ptr, uint8_t c, uint32_t n) {
+mj_u32 *memory_set4(mj_u32 *ptr, mj_u8 c, mj_u32 n) {
     return bootrom_funcs.memset4(ptr, c, n);
 }
 
-uint32_t *memory_copy4(uint32_t *dest, uint32_t *src, uint32_t n) {
+mj_u32 *memory_copy4(mj_u32 *dest, mj_u32 *src, mj_u32 n) {
     return bootrom_funcs.memcpy44(dest, src, n);
 }

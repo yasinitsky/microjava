@@ -1,6 +1,7 @@
 /*
  * Microjava - Java for microcontrollers
  * Copyright (C) 2024 Yaroslav Yasynytskyi
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,20 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "resets.h"
+#ifndef MJ_SHARED_TYPES_H
+#define MJ_SHARED_TYPES_H
 
-#include "memory/memory.h"
+/**
+ * @file    types.h
+ * @brief   Machine-independent fundamental types
+ */
 
-#define RESETS_BASE         0x4000c000u
-#define RESETS_RESET        (RESETS_BASE + 0x0u)
-#define RESETS_RESET_DONE   (RESETS_BASE + 0x8u)
+#include <stdint.h>
+#include <stdbool.h>
 
-void resets_reset(mj_u32 blocks) {
-    memory_atomic_set(RESETS_RESET, blocks);
-}
+/* Types from stdint.h are used, because it's the solution with the best portability */
 
-void resets_unreset(mj_u32 blocks) {
-    memory_atomic_clear(RESETS_RESET, blocks);
+typedef uint8_t     mj_u8;
+typedef uint16_t    mj_u16;
+typedef uint32_t    mj_u32;
+typedef uint64_t    mj_u64;
 
-    while(~memory_read(RESETS_RESET_DONE) & blocks) { }
-}
+typedef int8_t      mj_s8;
+typedef int16_t     mj_s16;
+typedef int32_t     mj_s32;
+typedef int64_t     mj_s64;
+
+typedef bool        mj_bool;
+
+typedef uintptr_t   mj_uptr;
+
+#endif // MJ_SHARED_TYPES_H

@@ -27,29 +27,29 @@
 
 bootrom_funcs_t bootrom_funcs;
 
-typedef void *(*table_lookup_fn_t)(uint16_t *table, uint32_t code);
+typedef void *(*table_lookup_fn_t)(mj_u16 *table, mj_u32 code);
 
 /**
  * @brief   Get 16-bit value at 16-bit address and convert it to pointer
  */
-static void *bootrom_ptr_at(uint16_t addr) {
-    return (void *)(uintptr_t)(*(uint16_t *)(uintptr_t)addr);
+static void *bootrom_ptr_at(mj_u16 addr) {
+    return (void *)(mj_uptr)(*(mj_u16 *)(mj_uptr)addr);
 }
 
-uint8_t bootrom_get_version() {
-    return *(uint8_t *)(uintptr_t) BOOTROM_VERSION;
+mj_u8 bootrom_get_version() {
+    return *(mj_u8 *)(mj_uptr) BOOTROM_VERSION;
 }
 
-void *bootrom_func_lookup(uint32_t code) {
+void *bootrom_func_lookup(mj_u32 code) {
     table_lookup_fn_t table_lookup = (table_lookup_fn_t) bootrom_ptr_at(BOOTROM_TABLE_LOOKUP);
-    return table_lookup((uint16_t *) bootrom_ptr_at(BOOTROM_FUNC_TABLE), code);
+    return table_lookup((mj_u16 *) bootrom_ptr_at(BOOTROM_FUNC_TABLE), code);
 }
 
-void *bootrom_data_lookup(uint32_t code) {
+void *bootrom_data_lookup(mj_u32 code) {
     table_lookup_fn_t table_lookup = (table_lookup_fn_t) bootrom_ptr_at(BOOTROM_TABLE_LOOKUP);
-    return table_lookup((uint16_t *) bootrom_ptr_at(BOOTROM_DATA_TABLE), code);
+    return table_lookup((mj_u16 *) bootrom_ptr_at(BOOTROM_DATA_TABLE), code);
 }
 
-uint32_t bootrom_table_code(const char c1, const char c2) {
+mj_u32 bootrom_table_code(const char c1, const char c2) {
     return (c2 << 8) | c1;
 }

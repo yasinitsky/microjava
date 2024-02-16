@@ -23,8 +23,7 @@
 #ifndef MJ_HW_RP2040_CLOCKS_H
 #define MJ_HW_RP2040_CLOCKS_H
 
-#include <stdint.h>
-#include <stdbool.h>
+#include <shared/types.h>
 
 /* Main sources for CLK_REF */
 #define CLOCKS_CLK_REF_SRC_ROSC         0x0u
@@ -132,11 +131,11 @@ void clocks_init();
  * @param source_frequency  Frequency of the clock source
  * @param frequency         Target clock frequency. Should be >= source_frequency
  */
-void clocks_clk_configure(clocks_clk_t clock, uint32_t source, uint32_t aux_source, uint32_t source_frequency, uint32_t frequency);
+void clocks_clk_configure(clocks_clk_t clock, mj_u32 source, mj_u32 aux_source, mj_u32 source_frequency, mj_u32 frequency);
 
 /**
  * @brief Get clock frequency
  */
-uint32_t clocks_clk_get_frequency(clocks_clk_t clock);
+mj_u32 clocks_clk_get_frequency(clocks_clk_t clock);
 
 #endif // MJ_HW_RP2040_CLOCKS_H

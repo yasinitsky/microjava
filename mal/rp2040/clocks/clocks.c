@@ -17,11 +17,11 @@
 
 #include "clocks.h"
 
+#include <assert.h>
+
 #include "memory/memory.h"
 #include "pll/pll.h"
 #include "xosc/xosc.h"
-
-#include <assert.h>
 
 /* clock_clk_configure relies on this equality */
 #if (CLOCKS_CLK_REF_SRC_AUXSRC != CLOCKS_CLK_SYS_SRC_AUXSRC)
@@ -51,15 +51,15 @@
 #define CLOCKS_CLK_RTC_FREQ     46875u
 #define CLOCKS_CLK_PERI_FREQ    125000000u
 
-static uint32_t clocks_frequencies[CLOCKS_CLK_COUNT];
+static mj_u32 clocks_frequencies[CLOCKS_CLK_COUNT];
 
 typedef struct {
-    uint32_t ctrl;
-    uint32_t div;
-    uint32_t selected;
+    mj_u32 ctrl;
+    mj_u32 div;
+    mj_u32 selected;
 } clock_hw_t;
 
-static bool has_main_source(clocks_clk_t clock) {
+static mj_bool has_main_source(clocks_clk_t clock) {
     return (clock == CLOCKS_CLK_REF || clock == CLOCKS_CLK_SYS);
 }
 
@@ -114,9 +114,9 @@ void clocks_init() {
     );
 }
 
-void clocks_clk_configure(clocks_clk_t clock, uint32_t source, uint32_t aux_source, uint32_t source_frequency, uint32_t frequency) {
+void clocks_clk_configure(clocks_clk_t clock, mj_u32 source, mj_u32 aux_source, mj_u32 source_frequency, mj_u32 frequency) {
     assert(frequency <= source_frequency);
-    uint32_t div = ((uint64_t) source_frequency << CLOCKS_CLK_DIV_INT_LSB) / frequency;
+    mj_u32 div = ((mj_u64) source_frequency << CLOCKS_CLK_DIV_INT_LSB) / frequency;
     clock_hw_t *clock_hw = select_clock(clock);
 
     if(div > clock_hw->div) {
@@ -130,7 +130,7 @@ void clocks_clk_configure(clocks_clk_t clock, uint32_t source, uint32_t aux_sour
         memory_atomic_clear(&clock_hw->ctrl, CLOCKS_CLK_CTRL_ENABLE_BITS);
 
         if(clocks_frequencies[clock] > 0) {
-            uint32_t delay = clocks_frequencies[CLOCKS_CLK_SYS] / clocks_frequencies[clock] + 1;
+            mj_u32 delay = clocks_frequencies[CLOCKS_CLK_SYS] / clocks_frequencies[clock] + 1;
             // wait at least delay cycles
             while(delay != 0) {
                 delay--;
@@ -151,6 +151,6 @@ void clocks_clk_configure(clocks_clk_t clock, uint32_t source, uint32_t aux_sour
     clocks_frequencies[clock] = frequency;
 }
 
-uint32_t clocks_clk_get_frequency(clocks_clk_t clock) {
+mj_u32 clocks_clk_get_frequency(clocks_clk_t clock) {
     return clocks_frequencies[clock];
 }

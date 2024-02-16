@@ -23,7 +23,7 @@
 #ifndef MJ_HW_RP2040_RESETS_H
 #define MJ_HW_RP2040_RESETS_H
 
-#include <stdint.h>
+#include <shared/types.h>
 
 #define RESETS_RESET_ALL        0x01ffffffu
 #define RESETS_RESET_USBCTRL    0x01000000u
@@ -57,13 +57,13 @@
  * 
  * @param blocks Bit OR of RESETS_RESET_* macros that indicates blocks to reset
  */
-void resets_reset(uint32_t blocks);
+void resets_reset(mj_u32 blocks);
 
 /**
  * @brief Unreset blocks and wait for the operation to finish
  * 
  * @param blocks Bit OR of RESETS_RESET_* macros that indicates blocks to unreset
  */
-void resets_unreset(uint32_t blocks);
+void resets_unreset(mj_u32 blocks);
 
 #endif // MJ_HW_RP2040_RESETS_H

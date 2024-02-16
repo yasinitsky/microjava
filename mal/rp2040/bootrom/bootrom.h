@@ -23,15 +23,14 @@
 #ifndef MJ_HW_RP2040_BOOTROM_H
 #define MJ_HW_RP2040_BOOTROM_H
 
-#include <stdint.h>
-#include <stdbool.h>
+#include <shared/types.h>
 
 /**
  * @brief   Get bootrom version
  * 
  * @return  Bootrom version
  */
-uint8_t bootrom_get_version();
+mj_u8 bootrom_get_version();
 
 /**
  * @brief   Get pointer to function from the bootrom lookup table
@@ -39,7 +38,7 @@ uint8_t bootrom_get_version();
  * @param   code Code in the lookup table. See @ref bootrom_table_code()
  * @return  Pointer to function
  */
-void *bootrom_func_lookup(uint32_t code);
+void *bootrom_func_lookup(mj_u32 code);
 
 /**
  * @brief   Get pointer to data from the bootrom lookup table
@@ -47,7 +46,7 @@ void *bootrom_func_lookup(uint32_t code);
  * @param   code Code in the lookup table. See @ref bootrom_table_code()
  * @return  Pointer to data
  */
-void *bootrom_data_lookup(uint32_t code);
+void *bootrom_data_lookup(mj_u32 code);
 
 /**
  * @brief   Get 32-bit code to use in lookup functions
@@ -56,15 +55,15 @@ void *bootrom_data_lookup(uint32_t code);
  * @param   c2 Second character
  * @return  Code
  */
-uint32_t bootrom_table_code(const char c1, const char c2);
+mj_u32 bootrom_table_code(const char c1, const char c2);
 
 /**
  * @brief   Bootrom functions. Members names correspond to functions names in datasheet.
  *          See @ref bootrom_funcs
  */
 typedef struct {
-    uint32_t *(*memset4)(uint32_t *ptr, uint8_t c, uint32_t n);
-    uint32_t *(*memcpy44)(uint32_t *dest, uint32_t *src, uint32_t n);
+    mj_u32 *(*memset4)(mj_u32 *ptr, mj_u8 c, mj_u32 n);
+    mj_u32 *(*memcpy44)(mj_u32 *dest, mj_u32 *src, mj_u32 n);
 } bootrom_funcs_t;
 
 /**
