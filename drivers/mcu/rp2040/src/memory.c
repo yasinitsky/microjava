@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "memory.h"
+#include <rp2040/memory.h>
 
-#include "bootrom/bootrom.h"
+#include <rp2040/bootrom.h>
 
 /**
  * @brief Representation of __memory_info symbol in .memory_info section. See @ref crt0.S for definition

@@ -15,11 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "int_divider.h"
-
 #include <shared/types.h>
 
-#include "memory/memory.h"
+#include <rp2040/memory.h>
 
 /* NOTE: There is no symbol DIV_BASE in the datasheet. This name used to clearly separate SIO functions without using SIO_BASE. */
 #define DIV_BASE        0xd0000060u

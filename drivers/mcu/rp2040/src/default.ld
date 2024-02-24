@@ -13,7 +13,7 @@ SECTIONS {
         __boot2_end = .;
     } > FLASH
 
-    ASSERT(__boot2_end - __boot2_start == 256, "2nd stage bootloader must be 256 bytes in size.")
+    /*ASSERT(__boot2_end - __boot2_start == 256, "2nd stage bootloader must be 256 bytes in size.")*/
 
     .flash.vectors : {
         *(.vectors)

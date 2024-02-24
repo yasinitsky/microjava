@@ -15,14 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <shared/types.h>
-#include <assert.h>
-
-#include "memory/memory.h"
-#include "bootrom/bootrom.h"
-#include "floating_point/floating_point.h"
-#include "clocks/clocks.h"
-#include "resets/resets.h"
+#include <rp2040/memory.h>
+#include <rp2040/bootrom.h>
+#include <rp2040/floating_point.h>
+#include <rp2040/clocks.h>
+#include <rp2040/resets.h>
 
 void main(void);
 

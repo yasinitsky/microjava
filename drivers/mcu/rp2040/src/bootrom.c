@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "bootrom.h"
+#include <rp2040/bootrom.h>
 
 /* Definitions from datasheet */
 #define BOOTROM_BASE            0x00000000u

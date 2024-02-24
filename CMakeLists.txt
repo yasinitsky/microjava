@@ -23,21 +23,25 @@ string(TOUPPER MJ_MCU_${MICROJAVA_MCU} MICROJAVA_MCU_DEFINE)
 
 add_compile_definitions(${MICROJAVA_MCU_DEFINE} ${MICROJAVA_BOARD_DEFINE})
 
-add_compile_options(-mtune=${MICROJAVA_COMPILER_CPU} ${MICROJAVA_COMPILER_OPTIONS} -Wall)
+add_compile_options(-mcpu=${MICROJAVA_COMPILER_CPU} ${MICROJAVA_COMPILER_OPTIONS} -Wall)
 
 add_executable(microjava cmake/null.c)
 
-add_subdirectory(mal)
 add_subdirectory(shared)
+
+add_subdirectory(mal/interface)
+add_subdirectory(mal/${MICROJAVA_MCU})
+target_link_libraries(microjava microjava_mal_mcu)
 
 if(DEFINED MICROJAVA_LINKER_SCRIPT)
     set_target_properties(microjava PROPERTIES LINK_DEPENDS ${MICROJAVA_LINKER_SCRIPT})
     target_link_options(microjava PRIVATE -nostdlib -T ${MICROJAVA_LINKER_SCRIPT})
 endif()
 
-target_link_libraries(microjava microjava_mal)
-
 if(MICROJAVA_BOARD STREQUAL "mock")
+    set(INSTALL_GTEST OFF CACHE BOOL "OFF" FORCE)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/3rdparty/googletest googlemock_bin)
+    
     add_subdirectory(test)
     target_link_libraries(microjava microjava_test)
 endif()

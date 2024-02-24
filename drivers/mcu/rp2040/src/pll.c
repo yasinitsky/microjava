@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "pll.h"
+#include <rp2040/pll.h>
 
 #include <assert.h>
 
-#include "xosc/xosc.h"
-#include "resets/resets.h"
-#include "memory/memory.h"
+#include <rp2040/xosc.h>
+#include <rp2040/resets.h>
+#include <rp2040/memory.h>
 
 #define PLL_SYS_BASE    0x40028000u
 #define PLL_USB_BASE    0x4002c000u

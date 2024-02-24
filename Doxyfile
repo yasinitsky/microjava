@@ -866,7 +866,8 @@ WARN_LOGFILE           =
 
 INPUT                  = mal \
                          shared \
-                         test
+                         test \
+                         drivers \
                          docs/dev
 
 # This tag can be used to specify the character encoding of the source files

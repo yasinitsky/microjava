@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "xosc.h"
+#include <rp2040/xosc.h>
 
-#include "memory/memory.h"
+#include <rp2040/memory.h>
 
 #define XOSC_BASE       0x40024000u
 #define XOSC_CTRL       (XOSC_BASE)

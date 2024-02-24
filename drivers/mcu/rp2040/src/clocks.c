@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "clocks.h"
+#include <rp2040/clocks.h>
 
 #include <assert.h>
 
-#include "memory/memory.h"
-#include "pll/pll.h"
-#include "xosc/xosc.h"
+#include <rp2040/memory.h>
+#include <rp2040/pll.h>
+#include <rp2040/xosc.h>
 
 /* clock_clk_configure relies on this equality */
 #if (CLOCKS_CLK_REF_SRC_AUXSRC != CLOCKS_CLK_SYS_SRC_AUXSRC)

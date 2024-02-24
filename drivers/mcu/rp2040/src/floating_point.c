@@ -15,10 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "floating_point.h"
+#include <rp2040/floating_point.h>
 
-#include "bootrom/bootrom.h"
-#include "bootrom/fplib.h"
+#include <rp2040/bootrom.h>
+#include <rp2040/fplib.h>
 
 /**
  * @brief   Pointers to floating point functions in bootrom. Filled once by @ref floating_point_init().

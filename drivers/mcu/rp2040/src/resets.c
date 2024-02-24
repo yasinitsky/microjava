@@ -15,9 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "resets.h"
+#include <rp2040/resets.h>
 
-#include "memory/memory.h"
+#include <rp2040/memory.h>
 
 #define RESETS_BASE         0x4000c000u
 #define RESETS_RESET        (RESETS_BASE + 0x0u)
