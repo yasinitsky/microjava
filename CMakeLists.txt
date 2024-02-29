@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.24)
 
 # select MCU by board name
 include(cmake/board_mcu_map.cmake)
@@ -31,7 +31,7 @@ add_subdirectory(shared)
 
 add_subdirectory(mal/interface)
 add_subdirectory(mal/${MICROJAVA_MCU})
-target_link_libraries(microjava microjava_mal_mcu)
+target_link_libraries(microjava "$<LINK_LIBRARY:WHOLE_ARCHIVE,microjava_mal_mcu>")
 
 if(DEFINED MICROJAVA_LINKER_SCRIPT)
     set_target_properties(microjava PROPERTIES LINK_DEPENDS ${MICROJAVA_LINKER_SCRIPT})

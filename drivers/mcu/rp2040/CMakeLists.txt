@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
-
+cmake_minimum_required(VERSION 3.24)
 include(boards.cmake)
 
 microjava_map_find(rp2040_board_boot2 RP2040_BOOT2 ${MICROJAVA_BOARD})
